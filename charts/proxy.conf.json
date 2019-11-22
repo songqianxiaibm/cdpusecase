@@ -1,0 +1,11 @@
+{  
+    "/api/*": 
+    {    
+        "target": "http://9.115.112.204:9200",
+        "secure": false,   
+        "pathRewrite": 
+        {
+            "^/api" : ""
+        } 
+    }
+}
