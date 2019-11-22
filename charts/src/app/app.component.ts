@@ -1,14 +1,11 @@
 import {Component, OnInit, Input, AfterViewInit, ViewChildren} from '@angular/core';
-//import { Component } from '@angular/core';
-import { WeatherService } from './weather.service';
+import { CustomerSource } from './customer/customer.interface';
+import { ElasticsearchService } from './elasticsearch.service';
 import { Chart } from 'chart.js';
 import {ElementRef} from '@angular/core';
 import {elasticsearch} from 'elasticsearch';
 import { ngModuleJitUrl } from '@angular/compiler';
 import { Timestamp } from 'rxjs';
-
-//const elasticsearch = require('elasticsearch');
-//const moment = require('moment');
 
 
 @Component({
@@ -18,10 +15,13 @@ import { Timestamp } from 'rxjs';
 })
 export class AppComponent {
     charts = []; // This will hold our chart info
-    // @ViewChildren('mycharts') myCharts: any;
-    
-    constructor(private _weather: WeatherService) {}
-    //public async es_getlogInfo();
+    private static readonly INDEX = 'zoa-zos-smf110_1-tvt7108.svl.ibm.com*';
+    //private static readonly INDEX = ['zoa-zos-smf110_1-tvt7108.svl.ibm.com-20191008', 'zoa-zos-smf110_1-tvt7108.svl.ibm.com-20191009'] ;
+    private static readonly TYPE = 'doc';
+
+    customerSources: CustomerSource[];
+
+    constructor(private es: ElasticsearchService) { }
     public level:string="enterprise";
     public courseData:string[] =["TRAN_Count","CPU_Utilization","CPU_TIME","Elapsed_TIME","Dispatch_TIME","Response_TIME"];
     public timelist:string[]=["last 1 hour","last 2 hours","last 3 hours","last 4 hours","last 5 hours","last 6 hours"];
@@ -38,21 +38,18 @@ export class AppComponent {
     public showTransaction:boolean = false;
     
     ngOnInit() {
-      // let Dates = [];
-      // let Dates = ["2019-10-08 06:28:55.530000", "2019-10-08 06:28:55.580000", "2019-10-08 06:28:55.580000","2019-10-08 06:28:55.630000", "2019-10-08 06:28:55.680000", "2019-10-08 06:28:55.730000"];
-      // let temp_ratio_before: any;
-      //let temp_ratio_before: Array<number> =[1,2,3,2,2,1];
-      //let stringbefore:string;
-      // let temp_ratio_after:any;
-      //let temp_ratio_after: Array<number> =[2,3,4,5,6,7];
-      //let stringafter:any;
-      //let temp_rmiTime:any;
-      //let rmiTime = []
-
+      this.es.getAllDocuments(AppComponent.INDEX, AppComponent.TYPE)
+        .then(response => {
+          this.customerSources = response.hits.hits;
+          console.log(response);
+        }, error => {
+          console.error(error);
+        }).then(() => {
+          console.log('Show Customer Completed!');
+        });
       this.showChart('Enterprise');
-      // stringbefore=  " curl -XGET '9.115.112.204:9200/cars/_search?pretty' -H 'Content-Type: application/json' -d "+
-      // "{ 'query': { 'range' : { 'year' : { 'gte' : 2019,'lte' : 2019}}}";
-      }
+    }
+
   public showChart(labelname:string){
     //this._weather.dailyForecast()
       // .subscribe((res: any) => {
@@ -102,14 +99,10 @@ export class AppComponent {
               }
             }
           })
-        //})
   }
   public addSystemChart(system){
     this.showSystem =true;
     this.showChart(system);
-  // var tempChart = this.showChart(system);
-  // this.charts.push(tempChart);
-
   }
   public addRegionChart(region){
     this.showRegion =true;
@@ -120,12 +113,3 @@ export class AppComponent {
   }
 }
 
-
-// ngAfterViewInit() {
-//   let canvasCharts = this.allMyCanvas._results;  // Get array with all canvas
-//   canvasCharts.map((myCanvas, i) => {   // For each canvas, save the chart on the charts array 
-//      this.charts[i].chart = new Chart(myCanvas.nativeElement.getContext('2d'), {
-//        // ...
-//      }
-//   })
-// }

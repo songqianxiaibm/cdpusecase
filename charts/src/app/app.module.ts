@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { WeatherService } from './weather.service';
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule} from '@angular/forms'
 import { AppComponent } from './app.component';
+import { ElasticsearchService } from './elasticsearch.service';
 
 
 @NgModule({
@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [WeatherService],
+  providers: [ElasticsearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
