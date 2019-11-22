@@ -1,0 +1,25 @@
+html, body {
+    margin:0;
+}
+.w{
+    overflow:hidden;
+}
+.level {
+    float: left;
+    margin: 1%;
+    width: 50%;
+    border-style: solid;
+    border-width: 1px;
+}
+.chart{
+   float: left;
+   width: 80%; 
+}
+.label{
+    float: right;
+    width: 20%; 
+}
+section {
+    margin:-1%;
+    padding:20px;
+}

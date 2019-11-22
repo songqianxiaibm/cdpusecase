@@ -1,0 +1,81 @@
+<div class="w">
+    <div class ="select" id="select" style="height:50px;width:600px;">
+        <td style="width:40px;"></td>
+        <td>
+            <P> item:</P>
+          </td>
+          <td>
+            <select class="col-sm-3 form-control" style="width:100px;">
+              <option class="col-md-1" *ngFor="let course of courseData" [value]="course">{{course}}</option>
+            </select>
+          </td>
+          <td style="width:40px;"></td>
+          <td>
+              <P> start time:</P>
+            </td>
+            <td>
+              <select class="col-sm-3 form-control" style="width:100px;">
+                <option class="col-md-1" *ngFor="let timestart of timelist" [value]="time">{{timestart}}</option>
+              </select>
+            </td>
+            <td style="width:40px;"></td>
+          <td>
+              <p>time span:</p>
+            </td>
+            <td>
+                <select class="col-sm-3 form-control" style="width:100px;">
+                    <option class="col-md-1" *ngFor="let timespan of timespanlist" [value]="time">{{timespan}}</option>
+                </select>
+            </td>  
+            <button class="submit" type="button" style="float:right;" >Go</button>              
+      </div>
+  <section>
+    <div class="level">
+      <h1> This is Enterprise level chart.</h1>
+        <div class="chart">
+            <canvas id="Enterprise"></canvas>
+        </div>
+      <div id="systems" class= "label" style="float:right;">
+          <ul>
+            <li *ngFor="let system of Systems">
+                <!-- <div herf=‘#’ (click)="addSystemChart('system')" >{{system}}</div> -->
+                <div (click)="addSystemChart('system')" style="cursor: pointer;">{{system}}</div>
+            </li>
+          </ul>
+      </div>
+    </div>
+    <div class="level">
+      <h1> This is System level chart.</h1>
+      <div  class="chart">
+          <canvas id="system"></canvas>
+      </div>
+      <div *ngIf='showSystem' id="regions" class= "label" style="float:right;">
+          <ul>
+            <li *ngFor="let region of Regions">
+                <div (click)="addRegionChart('region')" style="cursor: pointer;" >{{region}}</div>
+            </li>
+          </ul>
+      </div>
+    </div>
+    <div  class="level">
+      <h1> This is Region level chart.</h1>
+      <div class="chart">
+        <canvas id="region"></canvas>
+      </div>
+      <div *ngIf='showRegion' id="transaction" class= "label" style="float:right;"> 
+          <ul>
+            <li *ngFor="let transaction of Transactions">
+                <div (click)="addTransactionChart('transac')" style="cursor: pointer;" >{{transaction}}</div>
+            </li>
+          </ul>
+      </div>
+    </div>
+
+    <div class="level">
+      <h1> This is Transaction level chart.</h1>
+      <div class="chart">
+          <canvas id="transac"></canvas>
+        </div>
+    </div>
+  </section>
+</div>
