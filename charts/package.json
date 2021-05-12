@@ -19,7 +19,7 @@
     "@angular/platform-browser": "~8.2.4",
     "@angular/platform-browser-dynamic": "~8.2.4",
     "@angular/router": "~8.2.4",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "elasticsearch": "^16.5.0",
     "elasticsearch-browser": "^16.5.0",
     "moment": "^2.24.0",
